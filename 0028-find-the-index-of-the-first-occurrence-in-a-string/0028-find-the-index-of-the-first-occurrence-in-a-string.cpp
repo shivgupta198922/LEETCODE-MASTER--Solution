@@ -1,13 +1,8 @@
+
 class Solution {
- public:
-  int strStr(string haystack, string needle) {
-     int m = haystack.length();
-     int n = needle.length();
-
-    for (int i = 0; i < m - n + 1; i++)
-      if (haystack.substr(i, n) == needle)
-        return i;
-
-    return -1;
-  }
+public:
+    int strStr(string haystack, string needle) {
+        // Use the find function to locate the first occurrence of needle in haystack
+        return haystack.find(needle);
+    }
 };
