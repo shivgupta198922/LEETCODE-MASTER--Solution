@@ -1,25 +1,20 @@
 class Solution {
- public:
-  int minimizedMaximum(int n, vector<int>& quantities) {
-    int l = 1;
-    int r = ranges::max(quantities);
-
-    while (l < r) {
-      const int m = (l + r) / 2;
-      if (numStores(quantities, m) <= n)
-        r = m;
-      else
-        l = m + 1;
+public:
+    bool isPossible(int x, vector<int>& quantities, int n) {
+        double sum = 0;
+        for (auto u : quantities)
+            sum += ceil(u * 1.0 / x * 1.0);
+        return sum > n;
     }
-
-    return l;
-  }
-
- private:
-  int numStores(const vector<int>& quantities, int m) {
-    // ceil(q / m)
-    return accumulate(
-        quantities.begin(), quantities.end(), 0,
-        [&](int subtotal, int q) { return subtotal + (q - 1) / m + 1; });
-  }
+    int minimizedMaximum(int n, vector<int>& quantities) {
+        int left = 1, right = 100000;
+        while (left < right) {
+            int mid = (left + right) / 2;
+            if (isPossible(mid, quantities, n))
+                left = mid + 1;
+            else
+                right = mid;
+        }
+        return left;
+    }
 };
