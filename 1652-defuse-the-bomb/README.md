@@ -1,4 +1,4 @@
-<h2><a href="https://leetcode.com/problems/defuse-the-bomb">1652. Defuse the Bomb</a></h2><h3>Easy</h3><hr><p>You have a bomb to defuse, and your time is running out! Your informer will provide you with a <strong>circular</strong> array <code>code</code>&nbsp;of length of <code>n</code>&nbsp;and a key <code>k</code>.</p>
+<h2><a href="https://leetcode.com/problems/defuse-the-bomb/?envType=daily-question&envId=2024-11-18">1652. Defuse the Bomb</a></h2><h3>Easy</h3><hr><p>You have a bomb to defuse, and your time is running out! Your informer will provide you with a <strong>circular</strong> array <code>code</code>&nbsp;of length of <code>n</code>&nbsp;and a key <code>k</code>.</p>
 
 <p>To decrypt the code, you must replace every number. All the numbers are replaced <strong>simultaneously</strong>.</p>
 
