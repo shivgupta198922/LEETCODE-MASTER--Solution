@@ -1,26 +1,28 @@
 class Solution {
- public:
-  vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
-    vector<vector<int>> ans;
-    ranges::sort(candidates);
-    dfs(candidates, 0, target, {}, ans);
-    return ans;
-  }
+public:
 
- private:
-  void dfs(const vector<int>& A, int s, int target, vector<int>&& path,
-           vector<vector<int>>& ans) {
-    if (target < 0)
-      return;
-    if (target == 0) {
-      ans.push_back(path);
-      return;
+void backtrack(vector<int>&candidates,int target,int curr,vector<vector<int>>&ans,vector<int>&temp){
+    if(curr==candidates.size()){
+        if(target==0){
+            ans.push_back(temp);
+        }
+        return;
     }
+    //if possible
+    if(candidates[curr]<=target){
+        temp.push_back(candidates[curr]);
+        backtrack(candidates,target-candidates[curr],curr,ans,temp);
+        temp.pop_back();
+    }
+    //backtrack 
+    backtrack(candidates,target,curr+1,ans,temp);
+}
 
-    for (int i = s; i < A.size(); ++i) {
-      path.push_back(A[i]);
-      dfs(A, i, target - A[i], move(path), ans);
-      path.pop_back();
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<vector<int>>ans;
+        vector<int>temp;
+        backtrack(candidates,target,0,ans,temp);
+        return ans;
+
     }
-  }
 };
