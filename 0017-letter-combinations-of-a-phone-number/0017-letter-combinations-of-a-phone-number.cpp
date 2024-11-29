@@ -1,37 +1,33 @@
 class Solution {
-public:
-    vector<string> letterCombinations(string digits) {
-        vector<string> res;
-        
-        if (digits.empty()) {
-            return res;
-        }
-        
-        unordered_map<char, string> digitToLetters = {
-            {'2', "abc"},
-            {'3', "def"},
-            {'4', "ghi"},
-            {'5', "jkl"},
-            {'6', "mno"},
-            {'7', "pqrs"},
-            {'8', "tuv"},
-            {'9', "wxyz"}
-        };
-        
-        backtrack(digits, 0, "", res, digitToLetters);
-        
-        return res;        
-    }
-
-    void backtrack(const string& digits, int idx, string comb, vector<string>& res, const unordered_map<char, string>& digitToLetters) {
-        if (idx == digits.length()) {
-            res.push_back(comb);
+private:
+    void solve(string digit, string output, int i, vector<string>& ans,
+               string mapping[]) {
+        if (i >= digit.length()) {
+            ans.push_back(output);
             return;
         }
-        
-        string letters = digitToLetters.at(digits[idx]);
-        for (char letter : letters) {
-            backtrack(digits, idx + 1, comb + letter, res, digitToLetters);
+
+        int num = digit[i] - '0';
+        string value = mapping[num];
+
+        for (int j = 0; j < value.length(); j++) {
+            output.push_back(value[j]);
+            solve(digit, output, i + 1, ans, mapping);
+            output.pop_back();
         }
-    }    
+    }
+
+public:
+    vector<string> letterCombinations(string digit) {
+        vector<string> ans;
+        if (digit.length() == 0) {
+            return ans;
+        }
+        int i = 0;
+        string output;
+        string mapping[10] = {"",    "",    "abc",  "def", "ghi",
+                              "jkl", "mno", "pqrs", "tuv", "wxyz"};
+        solve(digit, output, i, ans, mapping);
+        return ans;
+    }
 };
