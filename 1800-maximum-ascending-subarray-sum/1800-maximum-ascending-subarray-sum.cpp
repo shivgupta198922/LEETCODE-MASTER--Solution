@@ -13,7 +13,8 @@ public:
                 prefix=nums[i];
             }
         }
-        return max(maxi,prefix);
 
+        return max(maxi,prefix);
+        
     }
 };
