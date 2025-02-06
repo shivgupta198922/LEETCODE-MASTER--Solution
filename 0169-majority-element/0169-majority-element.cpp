@@ -1,15 +1,9 @@
 class Solution {
- public:
-  int majorityElement(vector<int>& nums) {
-    int ans;
-    int count = 0;
+public:
+    int majorityElement(vector<int>& nums) {
+        sort(nums.begin(),nums.end());
+        int n=nums.size();
 
-    for (const int num : nums) {
-      if (count == 0)
-        ans = num;
-      count += num == ans ? 1 : -1;
+        return nums[n/2];
     }
-
-    return ans;
-  }
 };
