@@ -1,29 +1,51 @@
 class Solution {
- public:
-  vector<vector<string>> solveNQueens(int n) {
-    vector<vector<string>> ans;
-    dfs(n, 0, vector<bool>(n), vector<bool>(2 * n - 1), vector<bool>(2 * n - 1),
-        vector<string>(n, string(n, '.')), ans);
-    return ans;
-  }
-
- private:
-  void dfs(int n, int i, vector<bool>&& cols, vector<bool>&& diag1,
-           vector<bool>&& diag2, vector<string>&& board,
-           vector<vector<string>>& ans) {
-    if (i == n) {
-      ans.push_back(board);
-      return;
+public:
+    map<int,int> straightline;
+    map<int,int> diagonallyleft;
+    map<int,int> diagonallyright;
+    vector<vector<string>> solveNQueens(int n) {
+        vector<vector<string>> output;
+        vector<int> path;
+        solve(n,0,output,path);
+        return output;        
     }
 
-    for (int j = 0; j < n; ++j) {
-      if (cols[j] || diag1[i + j] || diag2[j - i + n - 1])
-        continue;
-      board[i][j] = 'Q';
-      cols[j] = diag1[i + j] = diag2[j - i + n - 1] = true;
-      dfs(n, i + 1, move(cols), move(diag1), move(diag2), move(board), ans);
-      cols[j] = diag1[i + j] = diag2[j - i + n - 1] = false;
-      board[i][j] = '.';
+    void solve(int& n,int row,vector<vector<string>>& output,vector<int> path){
+        if(row==n){
+            make_ans(output,path,n);
+            return;
+        }
+        for(int i=0;i<n;i++){
+            if(isSafe(row,i,n)){
+                path.push_back(i);
+                straightline[i]++;
+                diagonallyright[row+i]++;
+                diagonallyleft[row-i]++;
+                solve(n,row+1,output,path);
+                straightline[i]--;
+                diagonallyright[row+i]--;
+                diagonallyleft[row-i]--;
+                path.pop_back();
+            }
+        }
+        return;
     }
-  }
+
+    bool isSafe(int row,int col,int n){
+        if (straightline[col] || diagonallyright[row + col] || diagonallyleft[row-col]) {
+            return false;
+        }
+        return true;
+    }
+
+    void make_ans(vector<vector<string>>& output,vector<int> path,int n){
+        vector<string> ans;
+        for(auto i:path){
+            string temp(n,'.');
+            temp[i]='Q';
+            ans.push_back(temp);
+        }
+        output.push_back(ans);
+
+    }
 };
