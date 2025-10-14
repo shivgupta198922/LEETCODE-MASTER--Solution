@@ -1,23 +1,22 @@
-#include <vector>
-using namespace std;
-
 class Solution {
-public:
-    void backtrack(vector<int>& nums, int start, vector<vector<int>>& result) {
-        if (start == nums.size()) {
-            result.push_back(nums);
+    void rec(int ind, vector<int>& nums, vector<vector<int>>&ans){
+        if(ind==nums.size()){
+            ans.push_back(nums);
+            //ans.push_back(nums);
             return;
         }
-        for (int i = start; i < nums.size(); i++) {
-            swap(nums[start], nums[i]);
-            backtrack(nums, start + 1, result);
-            swap(nums[start], nums[i]); // backtrack
+        for(int i=ind; i<nums.size(); i++){
+            swap(nums[ind], nums[i]);
+            rec(ind+1, nums, ans);
+            swap(nums[ind], nums[i]);
         }
-    }
 
+    }
+public:
     vector<vector<int>> permute(vector<int>& nums) {
-        vector<vector<int>> result;
-        backtrack(nums, 0, result);
-        return result;
+        vector<vector<int>> ans;
+        rec(0, nums, ans);
+        return ans;
+        
     }
 };
